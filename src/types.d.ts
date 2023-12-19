@@ -17,4 +17,8 @@ export interface ShowsList {
   [id: string]: ShowApi;
 }
 
+export interface SearchForm {
+  value: string;
+}
+
 
