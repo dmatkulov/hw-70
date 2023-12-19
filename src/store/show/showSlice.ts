@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
 import {Show} from '../../types';
 
@@ -17,11 +17,21 @@ const initialState: ShowState = {
 export const showSlice = createSlice({
   name: 'shows',
   initialState,
-  reducers: {}
+  reducers: {
+    setShows: (state, {payload: shows}: PayloadAction<Show[]>) => {
+      state.shows = shows;
+    }
+  }
 });
 
 export const showReducers = showSlice.reducer;
 
+export const {
+  setShows,
+} = showSlice.actions;
+
 export const selectShows = (state: RootState) => state.shows.shows;
+
 export const selectFetchLoading = (state: RootState) => state.shows.isFetching;
-export const selectFetchError = (state: RootState) => state.show.isError;
+
+export const selectFetchError = (state: RootState) => state.shows.isError;

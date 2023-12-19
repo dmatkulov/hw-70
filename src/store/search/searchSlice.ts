@@ -1,15 +1,19 @@
-import {SearchForm} from '../../types';
+import {ShowPreview} from '../../types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
 
 interface SearchState {
-  input: SearchForm;
+  input: string;
+  showPreviews: ShowPreview[]
+  fetchLoading: boolean;
+  fetchError: boolean;
 }
 
 const initialState: SearchState = {
-  input: {
-    value: ''
-  }
+  input: '',
+  showPreviews: [],
+  fetchLoading: false,
+  fetchError: false,
 };
 
 export const searchSlice = createSlice({
@@ -17,7 +21,10 @@ export const searchSlice = createSlice({
   initialState,
   reducers: {
     getSearchInput: (state, {payload: inputValue}: PayloadAction<string>) => {
-      state.input.value = inputValue;
+      state.input = inputValue;
+    },
+    setShowPreviews: (state, {payload: shows}: PayloadAction<ShowPreview[]>) => {
+      state.showPreviews = shows;
     }
   }
 });
@@ -25,7 +32,9 @@ export const searchSlice = createSlice({
 export const searchReducers = searchSlice.reducer;
 
 export const {
-  getSearchInput
+  getSearchInput,
+  setShowPreviews,
 } = searchSlice.actions;
 
 export const selectSearch = (state: RootState) => state.search.input;
+
