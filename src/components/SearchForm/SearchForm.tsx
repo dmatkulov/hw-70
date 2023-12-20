@@ -20,7 +20,6 @@ const SearchForm: React.FC = () => {
   
   useEffect(() => {
     void dispatch(fetchShowPreviews(selectSearchValue));
-    selectSearchValue.length > 3 && dispatch(showPreview(true));
   }, [dispatch, selectSearchValue]);
   
   return (
@@ -31,7 +30,7 @@ const SearchForm: React.FC = () => {
         required
         type="text"
         className="form-control"
-        placeholder="SearchForm for TV Shows..."
+        placeholder="SearchForm for TV Show..."
         value={selectSearchValue}
         onChange={searchChanged}
       />

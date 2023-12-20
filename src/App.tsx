@@ -1,7 +1,7 @@
 import Layout from './components/Layout/Layout';
 import {Route, Routes} from 'react-router-dom';
 import Home from './containers/Home/Home';
-import Shows from './containers/Shows/Shows';
+import ShowPage from './containers/ShowPage/ShowPage';
 
 function App() {
   
@@ -19,7 +19,7 @@ function App() {
           />
           <Route
             path="/shows/:id"
-            element={<Shows/>}
+            element={<ShowPage/>}
           />
           <Route
             path="*"

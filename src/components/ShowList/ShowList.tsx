@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {Link} from 'react-router-dom';
 import {getSearchInput, selectShowPreview, showPreview} from '../../store/search/searchSlice';
 
-const ShowPreview: React.FC = () => {
+const ShowList: React.FC = () => {
   const shows = useAppSelector(selectShowPreview);
   const dispatch = useAppDispatch();
   
@@ -15,7 +15,7 @@ const ShowPreview: React.FC = () => {
   return (
     <>
       {shows.length > 0 ? (
-        <ul className="list-group">
+        <ul className="list-group shadow-lg">
           {shows.map((show) => (
             <Link
               key={show.id}
@@ -28,10 +28,15 @@ const ShowPreview: React.FC = () => {
           ))}
         </ul>
       ) : (
-        <p>No shows found</p>
+        <ul className="list-group shadow-lg"
+        >
+          <li className="list-group-item text-center text-secondary py-3">
+            No matches
+          </li>
+        </ul>
       )}
     </>
   );
 };
 
-export default ShowPreview;
+export default ShowList;

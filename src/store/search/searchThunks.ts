@@ -1,32 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ShowApi, ShowPreview} from '../../types';
 import axiosApi from '../../axiosApi';
+import {AppDispatch} from '../../app/store';
+import {showPreview} from './searchSlice';
 
-// export const fetchShowPreviews = createAsyncThunk<ShowPreview[], string>(
-//   'search/fetchPreview',
-//   async (searchInput) => {
-//     if (searchInput.length > 2) {
-//       const showResponse = await axiosApi.get<ShowApi[]>('/search/shows?q=' + searchInput);
-//       const shows = showResponse.data;
-//
-//       if (!shows) {
-//         return [];
-//       }
-//
-//       return shows.map((showApi) => {
-//         const {id, name} = showApi.show;
-//         return {
-//           id,
-//           name,
-//         };
-//       });
-//     }
-//   }
-// );
-
-export const fetchShowPreviews = createAsyncThunk<ShowPreview[], string>(
-  'search/fetchPreview',
-  async (searchInput) => {
+export const fetchShowPreviews = createAsyncThunk<ShowPreview[], string, {dispatch: AppDispatch}>(
+  'search/fetchShows',
+  async (searchInput, thunkAPI) => {
     try {
       if (searchInput.length > 2) {
         const showResponse = await axiosApi.get<ShowApi[]>(`/search/shows?q=${searchInput}`);
@@ -35,6 +15,7 @@ export const fetchShowPreviews = createAsyncThunk<ShowPreview[], string>(
         if (!shows || shows.length === 0) {
           return [];
         }
+        thunkAPI.dispatch(showPreview(true));
         
         return shows.map((showApi) => {
           const { id, name } = showApi.show;

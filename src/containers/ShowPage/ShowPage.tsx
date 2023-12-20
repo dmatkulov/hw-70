@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../../components/Card/Card';
 
-const Shows: React.FC = () => {
+const ShowPage: React.FC = () => {
   return (
     <div>
       <Card/>
@@ -9,4 +9,4 @@ const Shows: React.FC = () => {
   );
 };
 
-export default Shows;
+export default ShowPage;
