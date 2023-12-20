@@ -19,10 +19,16 @@ const ShowPage: React.FC = () => {
   }, [dispatch, id]);
   
   
-  return show && (
+  return (
     <div>
       {loading && <Spinner/>}
-      <Card show={show}/>
+      {show ? (
+        <Card show={show}/>
+      ) : (
+        <div className="alert alert-light">
+          Something went wrong!
+        </div>
+      )}
     </div>
   );
 };

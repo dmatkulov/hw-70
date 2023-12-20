@@ -23,7 +23,7 @@ const SearchForm: React.FC = () => {
         required
         type="search"
         className="form-control position-relative"
-        placeholder="SearchForm for TV Show..."
+        placeholder="Search for TV Shows..."
         value={selectSearchValue}
         onChange={searchChanged}
       />
