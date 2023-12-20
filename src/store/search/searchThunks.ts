@@ -19,6 +19,7 @@ export const fetchShowPreviews = createAsyncThunk<ShowPreview[], string, {dispat
         
         return shows.map((showApi) => {
           const { id, name } = showApi.show;
+          console.log(name, id);
           return {
             id,
             name,

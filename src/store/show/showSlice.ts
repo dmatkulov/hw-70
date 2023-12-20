@@ -4,13 +4,13 @@ import {Show} from '../../types';
 import {fetchShow} from './showsThunks';
 
 interface ShowState {
-  shows: Show[];
+  shows: Show | null;
   isLoading: boolean;
   isError: boolean;
 }
 
 const initialState: ShowState = {
-  shows: [],
+  shows: null,
   isLoading: false,
   isError: false,
 };

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {getSearchInput, selectFetchLoading, selectSearch, showPreview} from '../../store/search/searchSlice';
+import {getSearchInput, selectFetchLoading, selectSearch} from '../../store/search/searchSlice';
 import ButtonSpinner from '../Spinner/ButtonSpinner';
 import {fetchShowPreviews} from '../../store/search/searchThunks';
 
@@ -12,37 +12,34 @@ const SearchForm: React.FC = () => {
     dispatch(getSearchInput(event.target.value));
   };
   
-  const onFormSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    await dispatch(fetchShowPreviews(selectSearchValue));
-    dispatch(showPreview(true));
-  };
-  
   useEffect(() => {
     void dispatch(fetchShowPreviews(selectSearchValue));
   }, [dispatch, selectSearchValue]);
   
   return (
-    <form
-      onSubmit={onFormSubmit}
+    <div
       className="input-group">
       <input
         required
-        type="text"
-        className="form-control"
+        type="search"
+        className="form-control position-relative"
         placeholder="SearchForm for TV Show..."
         value={selectSearchValue}
         onChange={searchChanged}
       />
-      <button
-        type="submit"
-        className={selectSearchIsFetching ? 'btn btn-secondary' : 'btn btn-primary'}
-        disabled={selectSearchIsFetching}
-      >
-        {selectSearchIsFetching && <ButtonSpinner/>}
-        Search shows
-      </button>
-    </form>
+      {selectSearchIsFetching && (
+        <span
+          style={{
+            position: 'absolute',
+            top: '3px',
+            right: '10px',
+            zIndex: '10'
+          }}
+        >
+          <ButtonSpinner/>
+        </span>
+      )}
+    </div>
   );
 };
 
