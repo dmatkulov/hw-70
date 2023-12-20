@@ -8,7 +8,7 @@ const Layout: React.FC<PropsWithChildren> = ({children}) => {
       <Navbar/>
       <main className="container-md mx-auto">
           <SearchBlock/>
-        <div className="row bg-danger px-3">
+        <div>
           {children}
         </div>
       </main>
