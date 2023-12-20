@@ -1,30 +1,54 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {Show, ShowPreview} from '../../types';
-import {AppDispatch} from '../../app/store';
+import {ShowApi, ShowPreview} from '../../types';
 import axiosApi from '../../axiosApi';
-import {setShows} from '../show/showSlice';
-import {setShowPreviews} from './searchSlice';
 
-export const fetchShows = createAsyncThunk<Show[], string, { dispatch: AppDispatch }>(
-  'search/fetchShows',
-  async (searchInput, thunkAPI) => {
-    const showsResponse = await axiosApi.get<Show[] | null>(`${searchInput}`);
-    const shows = showsResponse.data;
-    
-    if (!shows) {
+// export const fetchShowPreviews = createAsyncThunk<ShowPreview[], string>(
+//   'search/fetchPreview',
+//   async (searchInput) => {
+//     if (searchInput.length > 2) {
+//       const showResponse = await axiosApi.get<ShowApi[]>('/search/shows?q=' + searchInput);
+//       const shows = showResponse.data;
+//
+//       if (!shows) {
+//         return [];
+//       }
+//
+//       return shows.map((showApi) => {
+//         const {id, name} = showApi.show;
+//         return {
+//           id,
+//           name,
+//         };
+//       });
+//     }
+//   }
+// );
+
+export const fetchShowPreviews = createAsyncThunk<ShowPreview[], string>(
+  'search/fetchPreview',
+  async (searchInput) => {
+    try {
+      if (searchInput.length > 2) {
+        const showResponse = await axiosApi.get<ShowApi[]>(`/search/shows?q=${searchInput}`);
+        const shows = showResponse.data;
+        
+        if (!shows || shows.length === 0) {
+          return [];
+        }
+        
+        return shows.map((showApi) => {
+          const { id, name } = showApi.show;
+          return {
+            id,
+            name,
+          };
+        });
+      } else {
+        return [];
+      }
+    } catch (error) {
+      console.error('Something went wrong:', error);
       return [];
     }
-    
-    const showPreviews: ShowPreview[] = shows.map((show) => {
-      return {
-        id: show.id,
-        name: show.name
-      };
-    });
-    
-    thunkAPI.dispatch(setShowPreviews(showPreviews));
-    thunkAPI.dispatch(setShows(shows));
-    
-    return shows;
   }
 );
